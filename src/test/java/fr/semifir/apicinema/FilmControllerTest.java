@@ -90,7 +90,7 @@ public class FilmControllerTest {
         FilmDTO filmDTO = new FilmDTO("dfghjk", "La dernière", 120f, seance);
 
         // BDD Mock
-        BDDMockito.when(service.save(filmDTO)).thenReturn(filmDTO);
+        BDDMockito.when(service.save(ArgumentMatchers.any(FilmDTO.class))).thenReturn(filmDTO);
 
         // Request
         Gson json = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
