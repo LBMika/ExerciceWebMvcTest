@@ -64,8 +64,9 @@ public class CinemaService {
      * @param cinema
      * @return
      */
-    public CinemaDTO save(Cinema cinema) {
-        return mapper.map(this.repository.save(cinema), CinemaDTO.class);
+    public CinemaDTO save(CinemaDTO cinema) {
+        Cinema toSave = this.mapper.map(cinema, Cinema.class);
+        return mapper.map(this.repository.save(toSave), CinemaDTO.class);
     }
 
     /**
