@@ -1,6 +1,7 @@
 package fr.semifir.apicinema.services;
 
 import fr.semifir.apicinema.dtos.seance.SeanceDTO;
+import fr.semifir.apicinema.entities.Salle;
 import fr.semifir.apicinema.entities.Seance;
 import fr.semifir.apicinema.exceptions.NotFoundException;
 import fr.semifir.apicinema.repositories.SeanceRepository;
@@ -57,8 +58,9 @@ public class SeanceService {
      * @param seance
      * @return
      */
-    public SeanceDTO save(Seance seance) {
-        return mapper.map(this.repository.save(seance), SeanceDTO.class);
+    public SeanceDTO save(SeanceDTO seance) {
+        Seance toSave = this.mapper.map(seance, Seance.class);
+        return mapper.map(this.repository.save(toSave), SeanceDTO.class);
     }
 
     /**

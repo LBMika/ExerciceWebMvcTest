@@ -1,12 +1,10 @@
 package fr.semifir.apicinema.controllers;
 
 import fr.semifir.apicinema.dtos.seance.SeanceDTO;
-import fr.semifir.apicinema.dtos.seance.SeanceDTO;
 import fr.semifir.apicinema.entities.Seance;
-import fr.semifir.apicinema.exceptions.NotFoundException;
-import fr.semifir.apicinema.services.SalleService;
 import fr.semifir.apicinema.services.SeanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,20 +28,20 @@ public class SeanceController {
         Optional<SeanceDTO> SeanceDTO = null;
         try {
             SeanceDTO = this.service.findByID(id);
-        } catch (NotFoundException e) {
+            return ResponseEntity.ok(SeanceDTO.get());
+        } catch (Exception e) {
            return ResponseEntity.notFound().header(e.getMessage()).build();
         }
-        return ResponseEntity.ok(SeanceDTO.get());
     }
 
     @PostMapping
-    public SeanceDTO save(@RequestBody Seance seance) {
-        return this.service.save(seance);
+    public ResponseEntity<SeanceDTO> save(@RequestBody SeanceDTO seance) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(seance));
     }
 
     @PutMapping
-    public SeanceDTO update(@RequestBody Seance seance) {
-        return this.service.save(seance);
+    public ResponseEntity<SeanceDTO> update(@RequestBody SeanceDTO seance) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(seance));
     }
 
     @DeleteMapping
