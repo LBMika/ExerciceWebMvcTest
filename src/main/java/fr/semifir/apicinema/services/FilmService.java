@@ -60,15 +60,16 @@ public class FilmService {
      * @param film
      * @return
      */
-    public FilmDTO save(Film film) {
-        return mapper.map(this.repository.save(film), FilmDTO.class);
+    public FilmDTO save(FilmDTO film) {
+        Film toSave = this.mapper.map(film, Film.class);
+        return mapper.map(this.repository.save(toSave), FilmDTO.class);
     }
 
     /**
      * Je supprime mon film
      * @param film
      */
-    public void delete(Film film) {
-        this.repository.delete(film);
+    public void delete(FilmDTO film) {
+        this.repository.deleteById(film.getId());
     }
 }

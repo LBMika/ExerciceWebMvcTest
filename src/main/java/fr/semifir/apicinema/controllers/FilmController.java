@@ -5,6 +5,7 @@ import fr.semifir.apicinema.entities.Film;
 import fr.semifir.apicinema.exceptions.NotFoundException;
 import fr.semifir.apicinema.services.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,24 +29,24 @@ public class FilmController {
         Optional<FilmDTO> FilmDTO = null;
         try {
             FilmDTO = this.service.findByID(id);
-        } catch (NotFoundException e) {
+            return ResponseEntity.ok(FilmDTO.get());
+        } catch (Exception e) {
            return ResponseEntity.notFound().header(e.getMessage()).build();
         }
-        return ResponseEntity.ok(FilmDTO.get());
     }
 
     @PostMapping
-    public FilmDTO save(@RequestBody Film film) {
-        return this.service.save(film);
+    public ResponseEntity<FilmDTO> save(@RequestBody FilmDTO film) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(film));
     }
 
     @PutMapping
-    public FilmDTO update(@RequestBody Film film) {
-        return this.service.save(film);
+    public ResponseEntity<FilmDTO> update(@RequestBody FilmDTO film) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(film));
     }
 
     @DeleteMapping
-    public ResponseEntity<Boolean> delete(@RequestBody Film film) {
+    public ResponseEntity<Boolean> delete(@RequestBody FilmDTO film) {
         this.service.delete(film);
         return ResponseEntity.ok(true);
     }
