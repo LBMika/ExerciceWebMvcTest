@@ -3,6 +3,7 @@ package fr.semifir.apicinema;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fr.semifir.apicinema.controllers.SeanceController;
+import fr.semifir.apicinema.dtos.film.FilmDTO;
 import fr.semifir.apicinema.dtos.seance.SeanceDTO;
 import fr.semifir.apicinema.entities.Cinema;
 import fr.semifir.apicinema.entities.Salle;
@@ -90,7 +91,7 @@ public class SeanceControllerTest {
         SeanceDTO seanceDTO = new SeanceDTO("sdfghjk", new Date(), salle);
 
         // BDD Mock
-        BDDMockito.when(service.save(seanceDTO)).thenReturn(seanceDTO);
+        BDDMockito.when(service.save(ArgumentMatchers.any(SeanceDTO.class))).thenReturn(seanceDTO);
 
         // POST request
         Gson json = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
