@@ -57,8 +57,9 @@ public class SalleService {
      * @param salle
      * @return
      */
-    public SalleDTO save(Salle salle) {
-        return mapper.map(this.repository.save(salle), SalleDTO.class);
+    public SalleDTO save(SalleDTO salle) {
+        Salle toSave = this.mapper.map(salle, Salle.class);
+        return mapper.map(this.repository.save(toSave), SalleDTO.class);
     }
 
     /**

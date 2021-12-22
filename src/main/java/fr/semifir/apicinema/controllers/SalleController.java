@@ -2,9 +2,9 @@ package fr.semifir.apicinema.controllers;
 
 import fr.semifir.apicinema.dtos.salle.SalleDTO;
 import fr.semifir.apicinema.entities.Salle;
-import fr.semifir.apicinema.exceptions.NotFoundException;
 import fr.semifir.apicinema.services.SalleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,20 +28,20 @@ public class SalleController {
         Optional<SalleDTO> SalleDTO = null;
         try {
             SalleDTO = this.service.findByID(id);
-        } catch (NotFoundException e) {
+            return ResponseEntity.ok(SalleDTO.get());
+        } catch (Exception e) {
            return ResponseEntity.notFound().header(e.getMessage()).build();
         }
-        return ResponseEntity.ok(SalleDTO.get());
     }
 
     @PostMapping
-    public SalleDTO save(@RequestBody Salle salle) {
-        return this.service.save(salle);
+    public ResponseEntity<SalleDTO> save(@RequestBody SalleDTO salle) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(salle));
     }
 
     @PutMapping
-    public SalleDTO update(@RequestBody Salle salle) {
-        return this.service.save(salle);
+    public ResponseEntity<SalleDTO> update(@RequestBody SalleDTO salle) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(salle));
     }
 
     @DeleteMapping
